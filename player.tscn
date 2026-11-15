@@ -9,26 +9,16 @@ script/source = "extends CharacterBody2D
 @export var starting_mass: float = 10.0
 @export var growth_multiplier: float = 0.12
 @export var maximum_scale: float = 3.0
-
 var mass: float = 10.0
 var base_scale: Vector2 = Vector2.ONE
-
-
-
 @export var bounce_damage: float = 15.0
 @export var rebound_speed: float = 450.0 
-
-
 @export var move_speed : float = 220.0
-
 @export var bounce_speed: float = 600.0
 @export var bounce_duration: float = 0.35
-
 var is_bouncing: bool = false
 var bounce_direction: Vector2 = Vector2.ZERO
 var bounce_timer: float = 0.0
-
-
 
 func _physics_process(delta):
 	if is_bouncing:
@@ -108,7 +98,7 @@ func absorb_enemy(enemy_mass: float):
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_13pop"]
 size = Vector2(115.5, 89.5)
 
-[node name="Player" type="CharacterBody2D" unique_id=1737488921]
+[node name="Player" type="CharacterBody2D" unique_id=1737488921 groups=["player"]]
 script = SubResource("GDScript_eqrm3")
 metadata/_tc_uuid = "5325817467707461954"
 metadata/_edit_group_ = true
