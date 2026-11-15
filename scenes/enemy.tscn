@@ -1,0 +1,26 @@
+[gd_scene format=3 uid="uid://jsortinqygj2"]
+
+[ext_resource type="Texture2D" uid="uid://dx3mhnxraj1uh" path="res://icon.svg" id="1_7p1mj"]
+[ext_resource type="Script" uid="uid://3r4vq02u410a" path="res://scenes/enemy.gd" id="1_md0e3"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_13pop"]
+size = Vector2(120, 112)
+
+[node name="Enemy" type="CharacterBody2D" unique_id=395244221 groups=["enemies"]]
+script = ExtResource("1_md0e3")
+metadata/_tc_uuid = "1031078409228402961"
+metadata/_edit_group_ = true
+
+[node name="Enemy" type="Sprite2D" parent="." unique_id=1910984919]
+texture_filter = 1
+rotation = 0.9477138
+texture = ExtResource("1_7p1mj")
+metadata/_tc_offline_added = true
+metadata/_tc_uuid = "2724007891753457176"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1378095855]
+position = Vector2(3, -3.000001)
+rotation = 0.9477138
+shape = SubResource("RectangleShape2D_13pop")
+metadata/_tc_offline_added = true
+metadata/_tc_uuid = "1504964255480157779"

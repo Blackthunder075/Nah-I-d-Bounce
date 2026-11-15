@@ -6,6 +6,19 @@
 script/source = "extends CharacterBody2D
 
 
+@export var starting_mass: float = 10.0
+@export var growth_multiplier: float = 0.12
+@export var maximum_scale: float = 3.0
+
+var mass: float = 10.0
+var base_scale: Vector2 = Vector2.ONE
+
+
+
+@export var bounce_damage: float = 15.0
+@export var rebound_speed: float = 450.0 
+
+
 @export var move_speed : float = 220.0
 
 @export var bounce_speed: float = 600.0
@@ -38,8 +51,8 @@ func _physics_process(delta):
 		velocity = input_direction * move_speed
 
 	move_and_slide()
-
-
+	if is_bouncing:
+		check_bounce_collision()
 
 func _input(event):
 	if event is InputEventMouseButton:
@@ -58,11 +71,47 @@ func start_bounce():
 
 	is_bouncing = true
 	bounce_timer = bounce_duration
+	
+	
+func check_bounce_collision():
+	for i in get_slide_collision_count():
+		var collision = get_slide_collision(i)
+		var collider = collision.get_collider()
+
+		if collider.is_in_group(\"enemies\"):
+			collider.take_damage(bounce_damage)
+
+			bounce_direction = -collision.get_normal()
+			bounce_timer = bounce_duration
+			velocity = bounce_direction * rebound_speed
+
+
+func _ready():
+	mass = starting_mass
+	base_scale = scale
+	update_slime_scale()
+
+
+func update_slime_scale():
+	var growth = sqrt(mass / starting_mass)
+
+	growth = clamp(growth, 1.0, maximum_scale)
+	scale = base_scale * growth
+
+
+func absorb_enemy(enemy_mass: float):
+	mass += enemy_mass
+	update_slime_scale()
+	print(\"Current mass: \", mass)
 "
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_13pop"]
+size = Vector2(115.5, 89.5)
 
 [node name="Player" type="CharacterBody2D" unique_id=1737488921]
 script = SubResource("GDScript_eqrm3")
 metadata/_tc_uuid = "5325817467707461954"
+metadata/_edit_group_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=2829044]
 texture = ExtResource("1_4flbx")
@@ -70,5 +119,6 @@ metadata/_tc_offline_added = true
 metadata/_tc_uuid = "7258214724597903248"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1392903663]
+shape = SubResource("RectangleShape2D_13pop")
 metadata/_tc_offline_added = true
 metadata/_tc_uuid = "3665571658739263198"
